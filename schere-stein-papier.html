@@ -1,13 +1,52 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Schere Stein Papier</title>
+  <title>Rock Paper Scissor</title>
   <link rel="stylesheet" href="styles/global.css">
   <script src="scripts/main.js" type="module"></script>
 </head>
 <body>
-<h1>Schere Stein Papier</h1>
+  <!-- 
+    Sectioning content
+    Sectioning content is a subset of flow content, 
+    and can be used everywhere flow content is expected. 
+    Elements belonging to the sectioning content model 
+    create a section in the current outline that defines 
+    the scope of <header> elements, <footer> elements, and heading content.
+    Elements belonging to this category are <article>, <aside>, <nav>, and <section>.
+  -->
+  <main>
+    <section class="game">
+      
+      <section class="game-field">
 
+      </section>
+      <section class="game-history"></section>
+      <section class="game-controls">
+        <label for="player-name">Name</label>
+        <input type="text" id="game-controls-player-name">
+      </section>
+    </section>
+
+    <article class="leaderboard">
+      <header class="leaderboard-header">
+        <h2>Local Leaderboard</h2>
+      </header>
+      <section class="leaderboard-section-table">
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Score</th>
+          </tr>
+          <tr>
+            <td>Player 1</td>
+            <td>0</td>
+          </tr>
+        </table>
+      </section>
+    </article>
+  </main>
+  
 </body>
 </html>
