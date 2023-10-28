@@ -2,75 +2,103 @@ import { Utils } from '../utils/utils.js';
 
 export class OfflineGameService {
     static DELAY_MS = 1000;
-
-    constructor() {
-        this.possibleHands = Object.keys(this.#resultLookup);
-    }
-
-    // same data structure as server
-    #playerState = {
-        Markus: {
-            user: 'Markus',
-            win: 3,
-            lost: 6,
-        },
-        Michael: {
-            user: 'Michael',
-            win: 4,
-            lost: 5,
-        },
-        Lisa: {
-            user: 'Lisa',
-            win: 4,
-            lost: 5,
-        },
-    };
-
-    // Can be used to check if the selected hand wins/loses
-    // TODO : complete structure
-    #resultLookup = {
-        scissors: {
-            scissors: 0,
-            stone: 1,
+    playerStates = {};
+    resultLookup = {
+        scissor: {
+            scissor: 0,
+            rock: 1,
             paper: -1,
+            spock: 1,
+            lizard: -1,
         },
-        stone: {
-            scissors: 0,
-            stone: 0,
-            paper: 0,
+        rock: {
+            scissor: -1,
+            rock: 0,
+            paper: 1,
+            spock: 1,
+            lizard: -1,
         },
         paper: {
-            scissors: 0,
-            stone: 0,
+            scissor: 1,
+            rock: -1,
             paper: 0,
+            spock: -1,
+            lizard: 1,
         },
+        spock: {
+            scissor: -1,
+            rock: -1,
+            paper: 1,
+            spock: 0,
+            lizard: 1,
+        },
+        lizard: {
+            scissor: 1,
+            rock: 1,
+            paper: -1,
+            spock: -1,
+            lizard: 0,
+        }
     };
 
-    async getRankings() {
-        // TODO transform playerState structure to following data structure
-        return Promise.resolve([
-            {
-                rank: 1,
-                wins: 4,
-                players: ['Michael', 'Lisa'],
-            },
-            {
-                rank: 2,
-                wins: 3,
-                players: ['Markus'],
-            },
-        ]);
+    constructor() {
+        this.possibleHands = Object.keys(this.resultLookup);
     }
 
-    // TODO
+    async getRankings() {
+        let playerStateList = Object.values(this.playerStates)
+        playerStateList.sort((p1, p2) => p2.win - p1.win);
+        let rankings = playerStateList.reduce((rankings, player, index) => {
+            if (index === 0) {
+                rankings.push({
+                    rank: rankings.length + 1,
+                    wins: player.win,
+                    players: [player.user],
+                  });
+            } else if (player.win !== playerStateList[index - 1].win) {
+                rankings.push({
+                    rank: rankings.length + 1,
+                    wins: player.win,
+                    players: [player.user],
+                  });
+            } else {
+                rankings[accumulator.length - 1].players.push(player.user);
+            }
+            return rankings;
+        },[]);
+        return Promise.resolve(rankings);
+    }
+
     async evaluate(playerName, playerHand) {
-        const systemHand = this.possibleHands[0];
-        const gameEval = 0;
+        if (typeof playerName !== 'string') {
+            throw new Error('playerName must be a string');
+        }
+        if (!this.possibleHands.includes(playerHand)) {
+            throw new Error('playerHand must be one of: ' + this.possibleHands.join(', '));
+        }
 
-        console.log(playerName, playerHand, systemHand, gameEval);
-
-        await Utils.wait(OfflineGameService.DELAY_MS); // emulate async
-
-        return gameEval;
+        const systemHand = this.possibleHands[Utils.getRandomInt(5)];
+        const gameEval = this.resultLookup[playerHand][systemHand];
+        // if current player does not exist, create it
+        if (!this.playerStates[playerName]) {
+            this.playerStates[playerName] = {
+                user: playerName,
+                win: 0,
+                lost: 0,
+            };
+        }
+        // create result object
+        let result = {
+            choice: systemHand,
+        }
+        if (gameEval === 1) {
+            result.win = true;
+            this.playerStates[playerName].win += 1;
+        } else if (gameEval === -1) {
+            result.win = false;
+            this.playerStates[playerName].lost += 1;
+        }
+        await Utils.wait(OfflineGameService.DELAY_MS);
+        return result
     }
 }

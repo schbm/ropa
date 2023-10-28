@@ -1,52 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Rock Paper Scissor</title>
-  <link rel="stylesheet" href="styles/global.css">
-  <script src="scripts/main.js" type="module"></script>
-</head>
-<body>
-  <!-- 
-    Sectioning content
-    Sectioning content is a subset of flow content, 
-    and can be used everywhere flow content is expected. 
-    Elements belonging to the sectioning content model 
-    create a section in the current outline that defines 
-    the scope of <header> elements, <footer> elements, and heading content.
-    Elements belonging to this category are <article>, <aside>, <nav>, and <section>.
-  -->
-  <main>
-    <section class="game">
-      
-      <section class="game-field">
-
-      </section>
-      <section class="game-history"></section>
-      <section class="game-controls">
-        <label for="player-name">Name</label>
-        <input type="text" id="game-controls-player-name">
-      </section>
-    </section>
-
-    <article class="leaderboard">
-      <header class="leaderboard-header">
-        <h2>Local Leaderboard</h2>
-      </header>
-      <section class="leaderboard-section-table">
-        <table>
+  <head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissor</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <script src="scripts/main.js" type="module"></script>
+  </head>
+  <body>
+    <!-- 
+      Sectioning content
+      Sectioning content is a subset of flow content, 
+      and can be used everywhere flow content is expected. 
+      Elements belonging to the sectioning content model 
+      create a section in the current outline that defines 
+      the scope of <header> elements, <footer> elements, and heading content.
+      Elements belonging to this category are <article>, <aside>, <nav>, and <section>.
+    -->
+    <header>
+      <h1>Rock Paper Scissor Spock Lizard</h1>
+    </header>
+    <main>
+      <section id="game">
+        <div id="game-field" class="hidden">
+          <div id="game-field-controls">
+            <button type="button" id="game-field-controls-rock" data-move="rock">Rock</button>
+            <button type="button" id="game-field-controls-paper" data-move="paper">Paper</button>
+            <button type="button" id="game-field-controls-scissor" data-move="scissor">Scissor</button>
+            <button type="button" id="game-field-controls-spock" data-move="spock">Spock</button>
+            <button type="button" id="game-field-controls-lizard" data-move="lizard">Lizard</button>
+          </div>
+          <div id="game-field-display"></div>
+          <p id="game-field-output"></p>
+        </div>
+        <table id="game-history">
           <tr>
-            <th>Name</th>
-            <th>Score</th>
-          </tr>
-          <tr>
-            <td>Player 1</td>
-            <td>0</td>
+            <th>Result</th>
+            <th>Player</th>
+            <th>Opponent</th>
           </tr>
         </table>
+        <div id="game-controls">
+          <label id="game-controls-player-name-label" for="game-controls-player-name">Name</label>
+          <input type="text" id="game-controls-player-name">
+          <button id="game-controls-start">Start</button>
+        </div>
       </section>
-    </article>
-  </main>
-  
-</body>
+
+      <article class="leaderboard">
+        <header class="leaderboard-header">
+          <h2>Local Leaderboard</h2>
+        </header>
+        <section class="leaderboard-section-table">
+          <table id="leaderboard-table">
+            <tr>
+              <th>Rank</th>
+              <th>Wins</th>
+              <th>Names</th>
+            </tr>
+          </table>
+        </section>
+      </article>
+    </main>
+    <footer>
+      <p>MAS 2023</p>
+    </footer>
+  </body>
 </html>

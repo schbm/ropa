@@ -6,4 +6,8 @@ export class Utils {
             }, ms);
         });
     }
+
+    static getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
 }
