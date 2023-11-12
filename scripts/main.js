@@ -3,6 +3,7 @@ import { gameService } from './model/game-service.js';
 const input_name = document.querySelector('#game-controls-player-name');
 const button_start = document.querySelector('#game-controls-start');
 const game_field = document.querySelector('#game-field');
+const game_field_title = document.querySelector('#game-field-title');
 const game_output = document.querySelector('#game-field-output');
 const game_field_controls = document.querySelector('#game-field-controls');
 const game_controls = document.querySelector('#game-controls');
@@ -21,12 +22,10 @@ function writeToHistory(result, player, opponent){
 }
 
 function populateLeaderboard(list){
-    //check if list is list
     if (!Array.isArray(list)){
         gotError("Invalid list");
         return;
     }
-    // iterate list
     list.forEach((element, index) => {
         leaderboard_table.innerHTML = ''
         leaderboard_table.innerHTML += `
@@ -110,8 +109,10 @@ function startGame(event){
         gotError("Invalid name");
         return
     }
+    
     playerName = input_name.value;
     game_field.classList.toggle('hidden');
+    game_field_title.innerHTML = `Playing as: ${playerName}`
     game_controls.classList.toggle('hidden');
 }
 
