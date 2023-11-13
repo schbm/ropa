@@ -2,7 +2,9 @@ import { Utils } from '../utils/utils.js';
 
 export class OfflineGameService {
     static DELAY_MS = 1000;
+
     playerStates = {};
+
     resultLookup = {
         scissor: {
             scissor: 0,
@@ -46,25 +48,25 @@ export class OfflineGameService {
     }
 
     async getRankings() {
-        let playerStateList = Object.values(this.playerStates)
+        const playerStateList = Object.values(this.playerStates)
         playerStateList.sort((p1, p2) => p2.win - p1.win);
-        let rankings = playerStateList.reduce((rankings, player, index) => {
+        const rankings = playerStateList.reduce((ranking, player, index) => {
             if (index === 0) {
-                rankings.push({
-                    rank: rankings.length + 1,
+                ranking.push({
+                    rank: ranking.length + 1,
                     wins: player.win,
                     players: [player.user],
                   });
             } else if (player.win !== playerStateList[index - 1].win) {
-                rankings.push({
-                    rank: rankings.length + 1,
+                ranking.push({
+                    rank: ranking.length + 1,
                     wins: player.win,
                     players: [player.user],
                   });
             } else {
-                rankings[accumulator.length - 1].players.push(player.user);
+                ranking[ranking.length - 1].players.push(player.user);
             }
-            return rankings;
+            return ranking;
         },[]);
         return Promise.resolve(rankings);
     }
@@ -74,7 +76,7 @@ export class OfflineGameService {
             throw new Error('playerName must be a string');
         }
         if (!this.possibleHands.includes(playerHand)) {
-            throw new Error('playerHand must be one of: ' + this.possibleHands.join(', '));
+            throw new Error(`playerHand must be one of: ${this.possibleHands.join(', ')}`);
         }
 
         const systemHand = this.possibleHands[Utils.getRandomInt(5)];
@@ -88,7 +90,7 @@ export class OfflineGameService {
             };
         }
         // create result object
-        let result = {
+        const result = {
             choice: systemHand,
         }
         if (gameEval === 1) {
