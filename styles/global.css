@@ -1,4 +1,3 @@
-
 /* Change overall font */
 * {
     font-family: Helvetica, sans-serif;
@@ -29,7 +28,7 @@ main {
     margin-right: 5rem;
 }
 
-#game-field-controls button{
+#game-field-controls button {
     background-color: #ED7D31;
     color: #fff;
     border: none;
@@ -44,13 +43,6 @@ main {
 #game-field-controls button:hover {
     background-color: #da8144;
     outline: solid 1px transparent;
-}
-
-#game-history {
-    width: 100%;
-}
-#game-history th, #game-history td{
-    border: solid black;
 }
 
 .hidden {

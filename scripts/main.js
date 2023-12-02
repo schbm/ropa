@@ -174,15 +174,13 @@ let cooldown = false;
 let isGameModeServer = false;
 //cooldown time
 const cooldownTime = 1000;
-
 //set event listeners
 //set game controls, only visible when startGame is called
 //set event bubbling on the container which has the game controls
 gameFieldCtrls.addEventListener('click', makeMove);
 //button for switching between main and game
 btnGameExit.addEventListener('click', exitGame);
-//test
+//button to switch server/localmode
 btnSwitchMode.addEventListener('click', switchGameMode);
-
 //start game, sets the game field visible, does what the name implies
 btnGameStart.addEventListener('click', startGame);
