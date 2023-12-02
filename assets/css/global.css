@@ -17,12 +17,11 @@ body {
 
 /* add margin to main content */
 main {
-    /* npm: unexpected unit? */
-    margin: 1rem 1rem 0rem;
+    margin: 1rem;
 }
 
 #game-field-controls {
-    display: flex !important;
+    display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     margin-left: 5rem;
@@ -30,7 +29,7 @@ main {
 }
 
 #game-field-controls button {
-    background-color: #ED7D31;
+    background-color: #ed7d31;
     color: #fff;
     border: none;
     border-radius: 8px;
