@@ -43,10 +43,6 @@ export class OfflineGameService {
         }
     };
 
-    constructor() {
-        this.possibleHands = Object.keys(this.resultLookup);
-    }
-
     async getRankings() {
         return this.playerStates;
     }
@@ -82,5 +78,9 @@ export class OfflineGameService {
         }
         await Utils.wait(OfflineGameService.DELAY_MS);
         return result
+    }
+
+    constructor() {
+        this.possibleHands = Object.keys(this.resultLookup);
     }
 }
