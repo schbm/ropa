@@ -1,5 +1,5 @@
 export class OnlineGameService {
-    //TODO make this local
+    // TODO make this local
     resultLookup = {
         scissor: {},
         rock: {},
@@ -8,7 +8,7 @@ export class OnlineGameService {
         lizard: {}
     };
 
-    //map to other language because no one informed us which language to use >:(
+    // map to other language because no one informed us which language to use >:(
     translateToServerLanguage(englishWord) {
         const translations = {
             'scissor': 'Schere',
@@ -17,22 +17,22 @@ export class OnlineGameService {
             'spock': 'Spock',
             'lizard': 'Echse'
         };
-    
+
         // Convert the word to lowercase for case-insensitive matching
         const lowerCaseWord = englishWord.toLowerCase();
-    
+
         // Use the translations object to get the equivalent word in the server's language
         const translatedWord = translations[lowerCaseWord];
-    
+
         if (translatedWord) {
             return translatedWord;
-        } else {
-            // If the word is not found in the translations, return the original word
-            return englishWord;
         }
+        
+        // If the word is not found in the translations, return the original word
+        return englishWord;
     }
 
-    //TODO error handling where?
+    // TODO error handling where?
     async getRankings() {
         const url = 'https://stone.sifs0005.infs.ch/ranking';
         try {
