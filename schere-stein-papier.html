@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Rock Paper Scissor</title>
-    <link rel="stylesheet" href="styles/global.css">
-    <script src="scripts/main.js" type="module"></script>
-  </head>
-  <body>
-    <!-- 
+
+<head>
+  <meta charset="UTF-8">
+  <title>Rock Paper Scissor</title>
+  <link rel="stylesheet" href="styles/global.css">
+  <script src="scripts/main.js" type="module"></script>
+</head>
+
+<body>
+  <!-- 
       Sectioning content
       Sectioning content is a subset of flow content, 
       and can be used everywhere flow content is expected. 
@@ -16,23 +18,39 @@
       the scope of <header> elements, <footer> elements, and heading content.
       Elements belonging to this category are <article>, <aside>, <nav>, and <section>.
     -->
-    <header>
-      <h1>Rock Paper Scissor Spock Lizard</h1>
-    </header>
-    <main>
-      <section id="game">
-        <div id="game-field" class="hidden">
-          <h2 id="game-field-title"></h2>
-          <div id="game-field-controls">
-            <button type="button" id="game-field-controls-rock" data-move="rock">Rock</button>
-            <button type="button" id="game-field-controls-paper" data-move="paper">Paper</button>
-            <button type="button" id="game-field-controls-scissor" data-move="scissor">Scissor</button>
-            <button type="button" id="game-field-controls-spock" data-move="spock">Spock</button>
-            <button type="button" id="game-field-controls-lizard" data-move="lizard">Lizard</button>
-          </div>
-          <div id="game-field-display"></div>
-          <p id="game-field-output"></p>
+
+  <!-- 
+      Page Title
+    -->
+  <header id="page-header">
+    <h1>Rock Paper Scissor Spock Lizard</h1>
+  </header>
+  <main>
+
+    <section id="game">
+      <!-- 
+        Main Game Field START
+        not visible until game is started
+      -->
+      <div id="game-field" class="hidden">
+        <h2 id="game-field-title"></h2>
+        <!--
+            Buttons used to play the game
+          -->
+        <div id="game-field-controls">
+          <button type="button" id="game-field-controls-rock" data-move="rock">Rock</button>
+          <button type="button" id="game-field-controls-paper" data-move="paper">Paper</button>
+          <button type="button" id="game-field-controls-scissor" data-move="scissor">Scissor</button>
+          <button type="button" id="game-field-controls-spock" data-move="spock">Spock</button>
+          <button type="button" id="game-field-controls-lizard" data-move="lizard">Lizard</button>
         </div>
+        <div id="game-field-display"></div>
+        <!-- Main Textualt Output of the Game -->
+        <p id="game-field-output"></p>
+        <!-- 
+        Current Game History START
+        -->
+        <button type="button" id="game-exit">Back to Start</button>
         <table id="game-history">
           <tr>
             <th>Result</th>
@@ -40,30 +58,50 @@
             <th>Opponent</th>
           </tr>
         </table>
-        <div id="game-controls">
-          <label id="game-controls-player-name-label" for="game-controls-player-name">Name</label>
-          <input type="text" id="game-controls-player-name">
-          <button id="game-controls-start">Start</button>
-        </div>
-      </section>
+        <!-- 
+      Current Game History END
+    -->
+      </div>
+      <!-- 
+        Main Game Field END
+      -->
+      <!-- 
+        Game Controls START
+        Used to start a game and pick a name
+      -->
+      <div id="game-controls">
+        <label id="game-controls-player-name-label" for="game-controls-player-name">Name</label>
+        <input type="text" id="game-controls-player-name">
+        <button id="game-controls-start">New Game</button>
+      </div>
+      <!-- 
+      Game Controls END
+      -->
+    </section>
 
-      <article class="leaderboard">
-        <header class="leaderboard-header">
-          <h2>Local Leaderboard</h2>
-        </header>
-        <section class="leaderboard-section-table">
-          <table id="leaderboard-table">
-            <tr>
-              <th>Rank</th>
-              <th>Wins</th>
-              <th>Names</th>
-            </tr>
-          </table>
-        </section>
-      </article>
-    </main>
-    <footer>
-      <p>MAS 2023</p>
-    </footer>
-  </body>
+    <!--
+      Game Leaderboard Start
+    -->
+    <article class="leaderboard">
+      <header class="leaderboard-header">
+        <h2>Local Leaderboard</h2>
+      </header>
+      <section class="leaderboard-section-table">
+        <table id="leaderboard-table">
+          <tr>
+            <th>Rank</th>
+            <th>Wins</th>
+            <th>Names</th>
+          </tr>
+        </table>
+      </section>
+    </article>
+    <!--
+      Game Leaderboard End
+    -->
+  </main>
+  <footer>
+    <p>MAS 2023</p>
+  </footer>
+</body>
 </html>

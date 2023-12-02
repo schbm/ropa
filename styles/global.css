@@ -1,22 +1,24 @@
 
+/* Change overall font */
 * {
     font-family: Helvetica, sans-serif;
 }
 
+/* set overall margin*/
 body {
     margin: 0;
 }
 
-header {
+#page-header {
     display: flex;
     justify-content: center;
     width: 100%;
+    border-bottom: solid black;
 }
 
+/* add margin to main content */
 main {
-    margin-top: 1rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin: 1rem 1rem 0rem 1rem;
 }
 
 #game-field-controls {
@@ -46,6 +48,9 @@ main {
 
 #game-history {
     width: 100%;
+}
+#game-history th, #game-history td{
+    border: solid black;
 }
 
 .hidden {

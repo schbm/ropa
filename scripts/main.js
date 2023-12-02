@@ -9,16 +9,13 @@ const gameFieldCtrls = document.querySelector('#game-field-controls');
 const gameCtrls = document.querySelector('#game-controls');
 const gameHistory = document.querySelector('#game-history');
 const leaderboardTable = document.querySelector('#leaderboard-table');
-
+const btnGameExit = document.querySelector('#game-exit')
 
 function gotError(err){
-    if (err instanceof Error) {
-        console.error(err);
-    }
-    console.error(`got err: ${err}`);
+    //TODO
 }
 
-function writeToHistory(result, player, opponent){
+function writeToHistory(resultStr, playerMoveStr, opponentMoveStr){
     gameHistory.innerHTML += `
         <tr>
             <td>${result}</td>
@@ -30,6 +27,7 @@ function writeToHistory(result, player, opponent){
 
 function populateLeaderboard(list){
     if (!Array.isArray(list)){
+        //TODO
         gotError("Invalid list");
         return;
     }
@@ -45,58 +43,61 @@ function populateLeaderboard(list){
     });
 }
 
-function draw(){
+function writeOutputDraw(){
     console.log("draw");
     gameOutput.innerHTML = `
         <h2>Draw!</h2>
     `;
 }
 
-function loose(){
+function writeOutputLoose(){
     console.log("loose");
     gameOutput.innerHTML = `
         <h2>You loose!</h2>
     `;
 }
 
-function win(){
+function writeOutputWin(){
     console.log("win");
     gameOutput.innerHTML = `
         <h2>You win!</h2>
     `;
 }
 
+// event bubbling on the game controls (rock, paper...)
 function makeMove(event){
+    //skip if the target is not a button
     if (event.target.tagName !== 'BUTTON') {return}
+    //skip if the cooldwon is active
     if (cooldown) {return}
     cooldown = true;
 
+    //get the move from the event data
     const playerHand = event.target.dataset.move
-    console.log("making a move: " + playerName + " " + playerHand);
     if(!gameService.possibleHands.includes(playerHand)){
+        //TODO something else
         gotError("Invalid hand");
         return;
     }
+    //let the game service evaluate the move
     gameService.evaluate(playerName, playerHand).then((result) => {
-        console.log(result);
         let resultstr = "";
         if ('win' in result){
             if (result.win){
-                win();
+                writeOutputWin();
                 resultstr = "win";
             } else {
-                loose();
+                writeOutputLoose();
                 resultstr = "loose";
             }
         } else {
-            draw();
+            writeOutputdraw();
             resultstr = "draw";
         }
         writeToHistory(resultstr, playerHand, result.choice);
         
     }).then(()=>{
         gameService.getRankings().then((rankings) => {
-            console.log(rankings);
             populateLeaderboard(rankings);
         });
     }).catch(gotError).finally(setTimeout(() => {
@@ -104,19 +105,40 @@ function makeMove(event){
     }, 1000));
 }
 
-function startGame(){
-    if (inputName.value === "") {
-        gotError("Invalid name");
-        return
-    }
-    
-    playerName = inputName.value;
+function toggleGame(name){
     gameField.classList.toggle('hidden');
-    gameFieldTitle.innerHTML = `Playing as: ${playerName}`
+    gameFieldTitle.innerHTML = `Playing as: ${name}`
     gameCtrls.classList.toggle('hidden');
 }
 
+function exitGame(){
+    toggleGame();
+}
+
+function startGame(){
+    if (inputName.value === "") {
+        // Display alert popup
+        window.alert('Please enter a name to start a game');
+        return
+    }
+    const name = inputName.value;
+    // set global var
+    playerName = name
+    //show game
+    toggleGame(name)
+}
+
+//default playername
 let playerName = "Anon";
+//cooldown state
 let cooldown = false;
+
+//set event listeners
+//set game controls, only visible when startGame is called
+//set event bubbling on the container which has the game controls
 gameFieldCtrls.addEventListener('click', makeMove);
+
+btnGameExit.addEventListener('click', exitGame);
+
+//start game, sets the game field visible, does what the name implies
 btnStart.addEventListener('click', startGame);
