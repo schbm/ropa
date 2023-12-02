@@ -1,6 +1,20 @@
 # ropa
 Assignment Web1
 
+# Kriterien
+
+- Alle Funktionen können komplett ohne externe Bibliotheken implementiert werden. Verwende keine externen Frameworks. Dies ermöglicht es Studierenden, ohne Erfahrung mit den jeweiligen Frameworks, das Peer-Review durchzuführen und erleichtert die Korrektur.
+- Funktionsumfang
+- Clean-Code
+-- Event Bubbling
+-- HTML Semantik
+-- Namensgebung
+-- Dead Code
+-- Dup Code
+-- Stylelint, ESlint
+- Architektur und Struktur
+
+
 # Pendenzen
 
 ## Schritt 1: Offline-Version
