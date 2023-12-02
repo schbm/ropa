@@ -15,21 +15,25 @@ const gameHistory = document.querySelector('#game-history');
 const leaderboard = document.querySelector('#leaderboard');
 const leaderboardTable = document.querySelector('#leaderboard-table');
 
-
+//TODO error handling :(
 function gotError(err) {
     window.alert(`An error occured: ${err}`)
 }
 
+//sanitize because of ganz funny people setting very very funny usernames >:C
 function sanitizeHtml(html) {
     const tempElement = document.createElement('div');
     tempElement.textContent = html;
     return tempElement.innerHTML;
 }
 
-
+//populate leaderboard
+//TODO limit on 10
 function populateLeaderboard(gameServiceRankings) {
     const rankingsArr = Object.values(gameServiceRankings)
+    //convert to arr
     rankingsArr.sort((p1, p2) => p2.win - p1.win);
+    //sort the array on wins
     const rankings = rankingsArr.reduce((ranking, player, index) => {
         if (index === 0) {
             ranking.push({
@@ -48,11 +52,12 @@ function populateLeaderboard(gameServiceRankings) {
         }
         return ranking;
     }, []);
-
+    //TODO ?
     if (!Array.isArray(rankings)) {
         gotError("Invalid list");
         return;
     }
+    //readd headers because im lazy and pragmatic
     leaderboardTable.innerHTML = `
     <tr>
         <th>Rank</th>
@@ -92,6 +97,7 @@ function writeGameOutput(didWinStr, playerHandStr, opponentHandStr) {
 }
 
 // event bubbling on the game controls (rock, paper...)
+//TODO error handling
 function makeMove(event) {
     //skip if the target is not a button
     //skip if the cooldwon is active
@@ -112,6 +118,7 @@ function makeMove(event) {
             const opponentHandStr = result.choice;
             let didWinStr = '';
 
+            //TODO enum?
             if (didWin === undefined) {
                 didWinStr = 'Draw'
             } else if (didWin) {
@@ -148,9 +155,7 @@ function startGame() {
         return
     }
     const name = inputPlayername.value;
-    // set global var
     playerName = name
-    //show game
     toggleGame(name)
 }
 
@@ -166,6 +171,7 @@ function switchGameMode() {
     }
 }
 
+//TODO state handling: no clue.
 //default playername
 let playerName = "Anon";
 //cooldown state

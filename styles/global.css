@@ -3,7 +3,7 @@
     font-family: Helvetica, sans-serif;
 }
 
-/* set overall margin*/
+/* set overall margin */
 body {
     margin: 0;
 }
@@ -17,7 +17,8 @@ body {
 
 /* add margin to main content */
 main {
-    margin: 1rem 1rem 0rem 1rem;
+    /* npm: unexpected unit? */
+    margin: 1rem 1rem 0rem;
 }
 
 #game-field-controls {

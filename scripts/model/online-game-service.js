@@ -1,5 +1,5 @@
 export class OnlineGameService {
-
+    //TODO make this local
     resultLookup = {
         scissor: {},
         rock: {},
@@ -8,6 +8,7 @@ export class OnlineGameService {
         lizard: {}
     };
 
+    //map to other language because no one informed us which language to use >:(
     translateToServerLanguage(englishWord) {
         const translations = {
             'scissor': 'Schere',
@@ -31,6 +32,7 @@ export class OnlineGameService {
         }
     }
 
+    //TODO error handling where?
     async getRankings() {
         const url = 'https://stone.sifs0005.infs.ch/ranking';
         try {
@@ -48,7 +50,7 @@ export class OnlineGameService {
         }
     }
 
-    // TODO
+    // TODO error handling? where?
     async evaluate(playerName, playerHand) {
         const translatedPlayerHand = this.translateToServerLanguage(playerHand)
         const url = `https://stone.sifs0005.infs.ch/play?playerName=${playerName}&playerHand=${translatedPlayerHand}&mode=spock`;
