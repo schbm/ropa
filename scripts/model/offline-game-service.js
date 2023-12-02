@@ -48,27 +48,7 @@ export class OfflineGameService {
     }
 
     async getRankings() {
-        const playerStateList = Object.values(this.playerStates)
-        playerStateList.sort((p1, p2) => p2.win - p1.win);
-        const rankings = playerStateList.reduce((ranking, player, index) => {
-            if (index === 0) {
-                ranking.push({
-                    rank: ranking.length + 1,
-                    wins: player.win,
-                    players: [player.user],
-                  });
-            } else if (player.win !== playerStateList[index - 1].win) {
-                ranking.push({
-                    rank: ranking.length + 1,
-                    wins: player.win,
-                    players: [player.user],
-                  });
-            } else {
-                ranking[ranking.length - 1].players.push(player.user);
-            }
-            return ranking;
-        },[]);
-        return Promise.resolve(rankings);
+        return this.playerStates;
     }
 
     async evaluate(playerName, playerHand) {
