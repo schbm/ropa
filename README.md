@@ -6,14 +6,19 @@ Assignment Web1
 - Alle Funktionen können komplett ohne externe Bibliotheken implementiert werden. Verwende keine externen Frameworks. Dies ermöglicht es Studierenden, ohne Erfahrung mit den jeweiligen Frameworks, das Peer-Review durchzuführen und erleichtert die Korrektur.
 - Funktionsumfang
 - Clean-Code
--- Event Bubbling
--- HTML Semantik
--- Namensgebung
--- Dead Code
--- Dup Code
--- Stylelint, ESlint
+    - Event Bubbling
+    - HTML Semantik
+    - Namensgebung
+    - Dead Code
+    - Dup Code
+    - Stylelint, ESlint
 - Architektur und Struktur
-
+    - Unabhängiger Gameservice
+    - Berechnungen im Gameservice
+    - SPA
+- Generell
+    - Responsive
+    - Keine Fehler, Warnungen oder Konsolenmeldungen
 
 # Pendenzen
 
