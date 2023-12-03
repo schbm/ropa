@@ -1,11 +1,14 @@
 import { Utils } from '../utils/utils.js';
 
 export class OfflineGameService {
-    //TODO make this local
+
+    // TODO make this local
     static DELAY_MS = 1000;
-    //TODO make this local
+    
+    // TODO make this local
     playerStates = {};
-    //TODO make this local
+
+    // TODO make this local
     resultLookup = {
         scissor: {
             scissor: 0,
@@ -44,6 +47,10 @@ export class OfflineGameService {
         }
     };
 
+    constructor() {
+        this.possibleHands = Object.keys(this.resultLookup);
+    }
+
     async getRankings() {
         return this.playerStates;
     }
@@ -79,9 +86,5 @@ export class OfflineGameService {
         }
         await Utils.wait(OfflineGameService.DELAY_MS);
         return result
-    }
-
-    constructor() {
-        this.possibleHands = Object.keys(this.resultLookup);
     }
 }

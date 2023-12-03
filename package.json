@@ -2,13 +2,13 @@
     "name": "wed-1-testat-template",
     "version": "1.0.0",
     "description": "Testat template",
-    "main": "scripts/main.js",
+    "main": "assets/js/main.js",
     "type": "module",
     "scripts": {
-        "start": "http-server -o /schere-stein-papier.html",
+        "start": "http-server -o /index.html",
         "test": "echo \"Error: no test specified\" && exit 1",
         "stylelint": "stylelint \"**/*.css\"",
-        "eslint": "eslint scripts/**",
+        "eslint": "eslint assets/js/**",
         "all": "npm run stylelint && npm run eslint  && node -e \"console.log('npm run all completed')\""
     },
     "author": "Michael Gfeller",
