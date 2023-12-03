@@ -17,10 +17,13 @@ const leaderboardTable = document.querySelector('#leaderboard-table');
 
 
 // default playername
-const playerName = "Anon";
+// shared variable :C
+let playerName = "Anon";
 // cooldown state
+// shared :C
 let cooldown = false;
 // game mode state
+// also shared :C
 let isGameModeServer = false;
 // cooldown time
 const cooldownTime = 1000;
@@ -99,11 +102,21 @@ function writeToHistory(didWinStr, playerHandStr, opponentHandStr) {
 }
 
 function clearHistory() {
-    gameHistory.innerHTML = '';
+    gameHistory.innerHTML = `
+        <tr>
+            <th>Result</th>
+            <th>Player</th>
+            <th>Opponent</th>
+        </tr>
+    `;
 }
 
-function writeGameOutput(didWinStr, playerHandStr, opponentHandStr) {
-    gameOutput.innerHTML = `${didWinStr}, You took: ${playerHandStr} Your opponent took: ${opponentHandStr}`;
+function writeGameOutputResult(didWinStr, playerHandStr, opponentHandStr) {
+    gameOutput.innerHTML = `<strong>${didWinStr}</strong>, You took: ${playerHandStr} Your opponent took: ${opponentHandStr}`;
+}
+
+function writeGameOutput(str) {
+    gameOutput.innerHTML = str;
 }
 
 // event bubbling on the game controls (rock, paper...)
@@ -121,7 +134,7 @@ function makeMove(event) {
         gotError("Invalid hand");
         return;
     }
-
+    writeGameOutput("Waiting for opponent")
     // let the game service evaluate the move
     gameService.evaluate(playerName, playerHand)
         .then((result) => {
@@ -138,7 +151,7 @@ function makeMove(event) {
             } else {
                 didWinStr = 'Loose'
             }
-            writeGameOutput(didWinStr, playerHandStr, opponentHandStr);
+            writeGameOutputResult(didWinStr, playerHandStr, opponentHandStr);
             writeToHistory(didWinStr, playerHandStr, opponentHandStr);
         })
         .then(() => {
@@ -167,6 +180,7 @@ function startGame() {
         return
     }
     const name = inputPlayername.value;
+    playerName = name;
     toggleGame(name);
 }
 
@@ -180,6 +194,8 @@ function switchGameMode() {
         isGameModeServer = true;
         btnSwitchMode.innerHTML = 'Switch to Local';
     }
+    gameService.getRankings()
+    .then((rankings) => {populateLeaderboard(rankings)});
 }
 
 // TODO state handling: no clue.
