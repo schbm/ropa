@@ -15,25 +15,35 @@ const gameHistory = document.querySelector('#game-history');
 const leaderboard = document.querySelector('#leaderboard');
 const leaderboardTable = document.querySelector('#leaderboard-table');
 
-//TODO error handling :(
+
+// default playername
+const playerName = "Anon";
+// cooldown state
+let cooldown = false;
+// game mode state
+let isGameModeServer = false;
+// cooldown time
+const cooldownTime = 1000;
+
+// TODO error handling :(
 function gotError(err) {
     window.alert(`An error occured: ${err}`)
 }
 
-//sanitize because of ganz funny people setting very very funny usernames >:C
+// sanitize because of ganz funny people setting very very funny usernames >:C
 function sanitizeHtml(html) {
     const tempElement = document.createElement('div');
     tempElement.textContent = html;
     return tempElement.innerHTML;
 }
 
-//populate leaderboard
-//TODO limit on 10
+// populate leaderboard
+// TODO limit on 10
 function populateLeaderboard(gameServiceRankings) {
     const rankingsArr = Object.values(gameServiceRankings)
-    //convert to arr
+    // convert to arr
     rankingsArr.sort((p1, p2) => p2.win - p1.win);
-    //sort the array on wins
+    // sort the array on wins
     const rankings = rankingsArr.reduce((ranking, player, index) => {
         if (index === 0) {
             ranking.push({
@@ -52,12 +62,12 @@ function populateLeaderboard(gameServiceRankings) {
         }
         return ranking;
     }, []);
-    //TODO ?
+    // TODO ?
     if (!Array.isArray(rankings)) {
         gotError("Invalid list");
         return;
     }
-    //readd headers because im lazy and pragmatic
+    // readd headers because im lazy and pragmatic
     leaderboardTable.innerHTML = `
     <tr>
         <th>Rank</th>
@@ -97,20 +107,22 @@ function writeGameOutput(didWinStr, playerHandStr, opponentHandStr) {
 }
 
 // event bubbling on the game controls (rock, paper...)
-//TODO error handling
+// TODO error handling
 function makeMove(event) {
-    //skip if the target is not a button
-    //skip if the cooldwon is active
+    // skip if the target is not a button
+    // skip if the cooldown is active
+
     if (event.target.tagName !== 'BUTTON' || cooldown) { return }
     cooldown = true;
 
-    //get the move from the event data
+    // get the move from the event data
     const playerHand = event.target.dataset.move
     if (!gameService.possibleHands.includes(playerHand)) {
         gotError("Invalid hand");
         return;
     }
-    //let the game service evaluate the move
+
+    // let the game service evaluate the move
     gameService.evaluate(playerName, playerHand)
         .then((result) => {
             const didWin = result.win;
@@ -118,7 +130,7 @@ function makeMove(event) {
             const opponentHandStr = result.choice;
             let didWinStr = '';
 
-            //TODO enum?
+            // TODO enum?
             if (didWin === undefined) {
                 didWinStr = 'Draw'
             } else if (didWin) {
@@ -131,7 +143,7 @@ function makeMove(event) {
         })
         .then(() => {
             gameService.getRankings()
-            .then((gameServiceRankings) => { populateLeaderboard(gameServiceRankings); })
+                .then((gameServiceRankings) => { populateLeaderboard(gameServiceRankings); })
         })
         .finally(setTimeout(() => { cooldown = false; }, cooldownTime));
 }
@@ -155,8 +167,7 @@ function startGame() {
         return
     }
     const name = inputPlayername.value;
-    playerName = name
-    toggleGame(name)
+    toggleGame(name);
 }
 
 function switchGameMode() {
@@ -171,22 +182,15 @@ function switchGameMode() {
     }
 }
 
-//TODO state handling: no clue.
-//default playername
-let playerName = "Anon";
-//cooldown state
-let cooldown = false;
-// game mode state
-let isGameModeServer = false;
-//cooldown time
-const cooldownTime = 1000;
-//set event listeners
-//set game controls, only visible when startGame is called
-//set event bubbling on the container which has the game controls
+// TODO state handling: no clue.
+
+// set event listeners
+// set game controls, only visible when startGame is called
+// set event bubbling on the container which has the game controls
 gameFieldCtrls.addEventListener('click', makeMove);
-//button for switching between main and game
+// button for switching between main and game
 btnGameExit.addEventListener('click', exitGame);
-//button to switch server/localmode
+// button to switch server/localmode
 btnSwitchMode.addEventListener('click', switchGameMode);
-//start game, sets the game field visible, does what the name implies
+// start game, sets the game field visible, does what the name implies
 btnGameStart.addEventListener('click', startGame);
